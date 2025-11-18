@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Application.Responses;
 using System.Security.Claims;
-using Application.Responses;
-namespace Application.UserApp.AuthServices
+
+namespace Application.UserApp.IAuthServices
 {
     public interface IAuthDataService
     {
-        Task<ServiceResponse<ClaimsPrincipal>> Login(string email, string password);
+        Task<ServiceResponse<ClaimsPrincipal>> LogInAsync(string email, string password);
+        Task LogoutAsync();
     }
 }

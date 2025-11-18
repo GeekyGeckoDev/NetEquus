@@ -1,0 +1,81 @@
+﻿@page "/createestate"
+@using Application.EstateApp.IEstateServices.IEstateOrchestrationServices;
+@using Application.SharedApp.IOwnershipServices;
+@using Application.UserApp.AuthServices;
+@using Application.EstateApp.EstateDtos;
+@using Application.UserApp.UserDtos;
+@using Application.SharedApp.OwnershipDtos;
+@using Microsoft.AspNetCore.Authorization
+@inject IEstateOrchestrationService OrchestrationService
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+
+@attribute [Authorize]
+
+
+<h3>Create Your Estate</h3>
+
+<div class="registration-box">
+    <input placeholder="Estate Name" @bind="newEstate.EstateName" class="input-style" />
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="text-danger">@errorMessage</div>
+    }
+
+    <button class="button" @onclick="CreateEstateAsync">Create Estate</button>
+</div>
+
+@code {
+    private EstateCreationDto newEstate = new EstateCreationDto();
+    private string errorMessage;
+
+    private async Task CreateEstateAsync()
+    {
+        // Get the logged-in user
+        var currentUser = AuthService.CurrentUser;
+
+        if (currentUser == null)
+        {
+            // Not logged in — redirect or show error
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        var userGuid = AuthService.CurrentUserGuid;
+
+        var userDto = new UserDto
+        {
+            UserId = userGuid // or Id depending on your property
+        };
+
+        var ownershipDto = new EstateOwnershipDto
+        {
+            UserId = userGuid,
+            isPrimaryOwner = true
+        };
+
+        // Call the orchestration service
+        var result = await OrchestrationService.CreateEstateWithOwnership(ownershipDto, newEstate, userDto);
+
+        if (!result.IsAllowed)
+        {
+            errorMessage = result.Message;
+            return;
+        }
+
+        // Success — navigate to confirmation
+        NavigationManager.NavigateTo("/estatemanager");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await AuthService.GetStateFromTokenAsync();
+            StateHasChanged(); // trigger UI update once auth state is restored
+        }
+    }
+}

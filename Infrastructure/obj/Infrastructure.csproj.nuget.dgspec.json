@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Infrastructure\\Infrastructure.csproj": {}
+    "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Infrastructure\\Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\Application.csproj": {
+    "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Rebel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\obj\\",
+        "outputPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj"
+              "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj"
               }
             }
           }
@@ -95,14 +95,14 @@
         }
       }
     },
-    "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj": {
+    "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Rebel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -160,14 +160,14 @@
         }
       }
     },
-    "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Rebel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -188,11 +188,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\Application.csproj"
+              "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\Application.csproj"
               },
-              "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Domain\\Domain.csproj"
+              "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Domain\\Domain.csproj"
               }
             }
           }

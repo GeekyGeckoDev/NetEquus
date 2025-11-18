@@ -1,3 +1,4 @@
+using API.Services;
 using Application.EstateApp.EstateServices;
 using Application.EstateApp.EstateServices.EstateCrudServices;
 using Application.EstateApp.EstateServices.EstateManagerServices;
@@ -13,6 +14,7 @@ using Application.SharedApp.IOwnershipRepos;
 using Application.SharedApp.IOwnershipServices;
 using Application.SharedApp.OwnershipServices;
 using Application.UserApp.AuthServices;
+using Application.UserApp.IAuthServices;
 using Application.UserApp.IUserRepos;
 using Application.UserApp.IUserServices;
 using Application.UserApp.IUserServices.IUserCrudServices;
@@ -30,9 +32,12 @@ using Infrastructure.Repositories.UserRepos;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using UI.Components;
 using UI.Services.Authentication;
 using UI.Services.CustomSessionServices;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,15 +59,25 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
     {
-        options.LoginPath = "/Account/Login"; // redirect unauthorized users
-        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]))
+        };
     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Add DbContext
 builder.Services.AddDbContext<NetEquusDbContext>(options =>

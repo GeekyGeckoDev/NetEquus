@@ -1,0 +1,145 @@
+﻿@using Application.UserApp.IUserServices.IUserCrudServices;
+@using Application.UserApp.UserDtos;
+@using Application.UserApp.IUserServices;
+@using Application.UserApp.IUserServices.IUserValidationServices;
+@rendermode InteractiveServer
+
+@page "/registration"
+
+<h3>Register here</h3>
+
+<div class="row">
+
+    <div class="col">
+        <div class="registration-box">
+
+            <h2>Join NetEquus</h2>
+
+
+            @if (!string.IsNullOrEmpty(usernameError))
+            {
+                <div class="text-danger">@usernameError</div>
+            }
+            <input placeholder="Enter your Username here"
+            class="input-style"
+            @bind="newUser.Username"
+            @onblur="@(async e => await CheckUsernameAsync())" />
+
+
+            <input placeholder="Enter your email here"
+            class="input-style"
+            @bind="newUser.Email"
+                   @onblur="@(async e => await CheckEmailAsync())" />
+
+            @if (!string.IsNullOrEmpty(emailError))
+            {
+                <div class="text-danger">@emailError</div>
+            }
+
+            <input placeholder="Enter your password here" class="input-style" type="password" @bind="newUser.Password">
+            @if (!string.IsNullOrEmpty(passwordError))
+            {
+                <div class="text-danger">@passwordError</div>
+            }
+            <br />
+            <button class="button" @onclick="RegisterUserAsync" > Register </button>
+        </div>
+
+    </div>
+
+</div>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+
+
+
+@code {
+
+
+    [Inject]
+    public IUserManagerService userManagerService { get; set; }
+
+    [Inject]
+    public IRegistrationValidationService registrationValidationService { get; set;}
+
+    [Inject]
+
+    public IEmailValidationService emailValidationService { get; set; }
+
+    private UserDto newUser = new UserDto();
+
+    private string usernameError;
+    private string emailError;
+    private string passwordError;
+
+
+    private async Task CheckUsernameAsync()
+    {
+        if (string.IsNullOrWhiteSpace(newUser.Username) || newUser.Username.Length < 3)
+        {
+            usernameError = string.Empty; // don’t show message for too-short input
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        var result = await registrationValidationService.CheckUsernameAsync(newUser);
+        usernameError = result.IsAllowed ? string.Empty : result.Message;
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task CheckEmailAsync()
+    {
+        if (string.IsNullOrWhiteSpace(newUser.Email))
+        {
+            emailError = "Email cannot be empty";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        var result = await emailValidationService.CheckEmailAsync(newUser);
+        emailError = result.IsAllowed ? string.Empty : result.Message;
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task RegisterUserAsync()
+    {
+        if (!string.IsNullOrEmpty(usernameError) || !string.IsNullOrEmpty(emailError))
+            return; // prevent submission if invalid
+
+        var result = await userManagerService.HashAndCreateUserAsync(newUser);
+
+        if (!result.IsAllowed)
+        {
+            // Detect which type of failure
+            if (result.Message.Contains("Password"))
+            {
+                passwordError = result.Message;
+            }
+            else
+            {
+                usernameError = result.Message;
+            }
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        // success
+        newUser = new UserDto();
+        passwordError = usernameError = emailError = string.Empty;
+    }
+    
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+}
