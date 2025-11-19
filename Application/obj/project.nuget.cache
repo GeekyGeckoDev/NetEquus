@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dF7TgjN5URQ=",
+  "dgSpecHash": "/RaEU9NNtYI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rebel\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Rebel\\.nuget\\packages\\blazored.sessionstorage\\2.4.0\\blazored.sessionstorage.2.4.0.nupkg.sha512",

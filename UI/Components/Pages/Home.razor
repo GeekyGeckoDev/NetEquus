@@ -1,7 +1,35 @@
-﻿@page "/"
+﻿@using Application.UserApp.AuthServices
 
-<PageTitle>Home</PageTitle>
+<h1>@message</h1>
 
-<h1>Hello, world!</h1>
+@code {
+    [Inject] private IAuthService AuthService { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+    string returnUrl;
+    string message = string.Empty;
 
-Welcome to your new app.
+    protected override async Task OnInitializedAsync()
+    {
+        returnUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+
+        //The user is logged in, but does not have the required role for a page
+        if (AuthService.IsLoggedIn)
+        {
+            message = "Sorry, you are not authorized to view this page.";
+        }
+        //The user is not logged in
+        else
+        {
+            NavigationManager.NavigateTo($"/login?returnUrl={returnUrl}", true);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await AuthService.GetStateFromTokenAsync();
+            StateHasChanged(); // trigger UI update once auth state is restored
+        }
+    }
+}

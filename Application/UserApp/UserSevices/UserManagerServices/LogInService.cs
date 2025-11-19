@@ -25,7 +25,7 @@ namespace Application.UserApp.UserSevices.UserManagerServices
             _passwordHasherService = passwordHasherService;
         }
 
-        public async Task<UserDto?> LoginAsync(string username, string password)
+        public async Task<UserDto?> ValidateUserAsync(string username, string password)
         {
             var user = await _userGetService.GetUserByEmailAsync(username);
 

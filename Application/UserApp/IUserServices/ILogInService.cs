@@ -9,6 +9,6 @@ namespace Application.UserApp.IUserServices
 {
     public interface ILogInService
     {
-        Task<UserDto?> LoginAsync(string username, string password);
+        Task<UserDto?> ValidateUserAsync(string username, string password);
     }
 }

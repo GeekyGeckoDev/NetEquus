@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RnzQb8RTmFQ=",
+  "dgSpecHash": "kUAAgKkT4SU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rebel\\Repos\\Repos\\NetEquus-Local\\NetEquus\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\Rebel\\Documents\\GitHub\\NetEquus\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rebel\\.nuget\\packages\\awssdk.core\\4.0.0.27\\awssdk.core.4.0.0.27.nupkg.sha512",
     "C:\\Users\\Rebel\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
