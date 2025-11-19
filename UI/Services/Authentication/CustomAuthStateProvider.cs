@@ -2,6 +2,7 @@
 using Application.UserApp.AuthServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Application.UserApp.IAuthServices;
 
 namespace UI.Services.Authentication
 {

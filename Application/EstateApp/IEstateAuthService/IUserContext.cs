@@ -11,6 +11,6 @@ namespace Application.EstateApp.IEstateAuthService
     {
         Task InitializeAsync();
 
-        EstateDto? EstateId { get; }
+        EstateDto? Estate { get; }
     }
 }

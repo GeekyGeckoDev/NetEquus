@@ -10,6 +10,6 @@ namespace Application.UserApp.IUserServices.IUserValidationServices
 {
     public interface IRegistrationValidationService
     {
-        Task<RuleResult> CheckUsernameAsync(UserDto userDto);
+        Task<RuleResult> CheckUsernameAsync(UserRegistrationDto userRegistrationDto);
     }
 }

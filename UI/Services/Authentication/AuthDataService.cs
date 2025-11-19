@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
+using Application.Responses;
 using Application.UserApp.IAuthServices;
 using Application.UserApp.UserDtos;
 using UI.Services.Authentication;
@@ -10,9 +11,9 @@ namespace UI.Services.Authentication
 
     public class AuthDataService : IAuthDataService
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public AuthDataService(AuthService authService)
+        public AuthDataService(IAuthService authService)
         {
             _authService = authService;
         }

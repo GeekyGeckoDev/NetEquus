@@ -21,13 +21,13 @@ namespace Application.UserApp.UserSevices.UserValidationServices
         }
 
 
-        public async Task<RuleResult> CheckUsernameAsync(UserDto userDto)
+        public async Task<RuleResult> CheckUsernameAsync(UserRegistrationDto userRegistrationDto)
         {
             // 1️⃣ Ask the repository if username exists
-            bool exists = await _userValidationRepository.UsernameExistsAsync(userDto.Username);
+            bool exists = await _userValidationRepository.UsernameExistsAsync(userRegistrationDto.Username);
 
             // 2️⃣ Apply domain rules via delegate
-            return UserDelegateCheckAll.CheckAll(userDto.Username,
+            return UserDelegateCheckAll.CheckAll(userRegistrationDto.Username,
                 UsernameRules.UsernameCannotByEmpty,
                 UsernameRules.UsernameAlreadyExists( _ => exists));
         }

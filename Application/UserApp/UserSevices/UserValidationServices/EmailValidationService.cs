@@ -21,11 +21,11 @@ namespace Application.UserApp.UserSevices.UserValidationServices
             _userValidationRepository = userValidationRepository;
         }
 
-        public async Task<RuleResult> CheckEmailAsync(UserDto userDto)
+        public async Task<RuleResult> CheckEmailAsync(UserRegistrationDto userRegistrationDto)
         {
-            bool exists = await _userValidationRepository.EmailExistsAsync(userDto.Email);
+            bool exists = await _userValidationRepository.EmailExistsAsync(userRegistrationDto.Email);
 
-            return EmailDelegateCheckAll.CheckAll(userDto.Email,
+            return EmailDelegateCheckAll.CheckAll(userRegistrationDto.Email,
                 EmailRules.EmailCannotBeEmpty,
                 EmailRules.EmailHasValidFormat,
                 EmailRules.EmailAlreadyExists(_ => exists)

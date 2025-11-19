@@ -12,7 +12,7 @@ namespace UI.Services.Authentication
         private readonly AuthenticationStateProvider _authStateProvider;
 
         public Guid UserId { get; private set; }
-        public EstateDto? EstateId { get; private set; }
+        public EstateDto? Estate { get; private set; }
 
         public UserContext(
             IEstateOwnershipOrchestrationService orchestrationService,
@@ -27,15 +27,18 @@ namespace UI.Services.Authentication
             var authState = await _authStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
 
-            if (user.Identity?.IsAuthenticated == true);
-    {
-                // Use NameIdentifier instead of non-existent "UserGuidId"
+            // No semicolon here!
+            if (user.Identity?.IsAuthenticated == true)
+            {
+                // Read the user ID from the JWT
                 var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (userIdClaim == null) return; // or throw
+                if (userIdClaim == null)
+                    return;
+
                 UserId = Guid.Parse(userIdClaim);
 
-                // Now fetch estate for this user
-                EstateId = await _estateOwnershipOrchestrationService.GetMapEstateOwnership(UserId);
+                // Load the user's estate
+                Estate = await _estateOwnershipOrchestrationService.GetMapEstateOwnership(UserId);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Application.Responses;
 using Application.UserApp.AuthServices;
+using Application.UserApp.IAuthServices;
 using Application.UserApp.UserDtos;
 using Domain.Entities.Models.Users;
 using Microsoft.AspNetCore.Components;
@@ -19,11 +20,12 @@ namespace UI.Components.Pages
         protected SignInModel loginModel = new();
 
         protected string DisplayError { get; set; } = "none;";
+        protected string errorMessage { get; set; } = "";
         public bool showPassword { get; set; }
         public string? passwordType { get; set; }
-        public string errorMessage { get; set; }
+
         protected InputText? inputTextFocus;
-        string returnUrl;
+        private string? returnUrl;
 
         protected override void OnInitialized()
         {
@@ -33,26 +35,23 @@ namespace UI.Components.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            //Parse the query string for the return URL, so we can go there after login
-            if (String.IsNullOrEmpty(returnUrl))
+            if (firstRender)
             {
+                // Extract returnUrl from query string
                 var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
                 {
                     returnUrl = url;
                 }
-            }
 
-            //A hard reset was performed or the session was lost, try to restore the state and redirect back to the returnUrl
-            if (firstRender && !AuthService.IsLoggedIn)
-            {
-                var restoredFromState = await AuthService.GetStateFromTokenAsync();
-                if (restoredFromState)
+                // Attempt restore from token
+                if (!AuthService.IsLoggedIn)
                 {
-                    if (!string.IsNullOrEmpty(returnUrl))
+                    var restored = await AuthService.RestoreFromLocalStorage();
+                    if (restored && !string.IsNullOrEmpty(returnUrl))
                     {
                         NavigationManager.NavigateTo(returnUrl);
-                        returnUrl = string.Empty;
+                        returnUrl = null;
                     }
                 }
             }
@@ -74,27 +73,33 @@ namespace UI.Components.Pages
 
         protected async Task HandleLogin()
         {
-            var loginResult = await AuthDataService.Login(loginModel.Email, loginModel.Password);
+            // 1. Call API through AuthDataService
+            var loginResult = await AuthDataService.LogInAsync(loginModel.Email, loginModel.Password);
 
             if (!loginResult.Success || loginResult.Data == null)
             {
-                errorMessage = loginResult.Message ?? "Login failed";
+                errorMessage = loginResult.Message ?? "Invalid login";
                 DisplayError = "block;";
                 return;
             }
 
-            // Login: sets cookie + Blazor state + localStorage
-            await AuthService.Login(loginResult.Data);
+            var principal = loginResult.Data;
 
-            Console.WriteLine($"[LoginPage] Logged in user: {AuthService.CurrentUser.Identity?.Name}");
+            // 2. Update Blazor auth state + localStorage token
+            var result = await AuthService.LogInAsync(loginModel.Email, loginModel.Password);
 
-            // Navigate to returnUrl or home
+            if (!result.Success || result.Data == null)
+            {
+                errorMessage = result.Message ?? "Login failed";
+                DisplayError = "block;";
+                return;
+            }
+
+            // At this point, AuthService.CurrentUser is already updated
+            Console.WriteLine($"Logged in user: {AuthService.CurrentUser.Identity?.Name}");
+
+            // 3. Go to returnUrl if present, otherwise home
             NavigationManager.NavigateTo(returnUrl ?? "/", forceLoad: true);
         }
-
-
-        private ClaimsPrincipal user = new ClaimsPrincipal();
-
-     
     }
 }
