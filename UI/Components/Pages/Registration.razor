@@ -72,7 +72,7 @@
             return;
         }
 
-        var result = await registrationValidationService.CheckUsernameAsync(newUser.Username);
+        var result = await registrationValidationService.CheckUsernameAsync(newUser);
         usernameError = result.IsAllowed ? string.Empty : result.Message;
     }
 
@@ -84,7 +84,7 @@
             return;
         }
 
-        var result = await emailValidationService.CheckEmailAsync(newUser.Email);
+        var result = await emailValidationService.CheckEmailAsync(newUser);
         emailError = result.IsAllowed ? string.Empty : result.Message;
     }
 
