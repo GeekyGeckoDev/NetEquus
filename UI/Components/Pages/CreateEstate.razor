@@ -1,19 +1,18 @@
 ﻿@page "/createestate"
-@using Application.EstateApp.IEstateServices.IEstateOrchestrationServices;
-@using Application.SharedApp.IOwnershipServices;
-@using Application.UserApp.AuthServices;
-@using Application.EstateApp.EstateDtos;
-@using Application.UserApp.UserDtos;
-@using Application.SharedApp.OwnershipDtos;
+@using Application.EstateApp.IEstateServices.IEstateOrchestrationServices
+@using Application.SharedApp.IOwnershipServices
+@using Application.UserApp.AuthServices
+@using Application.EstateApp.EstateDtos
+@using Application.UserApp.IAuthServices
+@using Application.UserApp.UserDtos
+@using Application.SharedApp.OwnershipDtos
 @using Microsoft.AspNetCore.Authorization
 @inject IEstateOrchestrationService OrchestrationService
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
 
-
 @attribute [Authorize]
-
 
 <h3>Create Your Estate</h3>
 
@@ -29,27 +28,20 @@
 </div>
 
 @code {
-    private EstateCreationDto newEstate = new EstateCreationDto();
+    private EstateCreationDto newEstate = new();
     private string errorMessage;
 
     private async Task CreateEstateAsync()
     {
-        // Get the logged-in user
-        var currentUser = AuthService.CurrentUser;
-
-        if (currentUser == null)
+        if (!AuthService.IsLoggedIn)
         {
-            // Not logged in — redirect or show error
             NavigationManager.NavigateTo("/login");
             return;
         }
 
-        var userGuid = AuthService.CurrentUserGuid;
+        Guid userGuid = AuthService.CurrentUserGuid;
 
-        var userDto = new UserDto
-        {
-            UserId = userGuid // or Id depending on your property
-        };
+        var userDto = new UserDto { UserId = userGuid };
 
         var ownershipDto = new EstateOwnershipDto
         {
@@ -57,8 +49,11 @@
             isPrimaryOwner = true
         };
 
-        // Call the orchestration service
-        var result = await OrchestrationService.CreateEstateWithOwnership(ownershipDto, newEstate, userDto);
+        var result = await OrchestrationService.CreateEstateWithOwnership(
+            ownershipDto,
+            newEstate,
+            userDto
+        );
 
         if (!result.IsAllowed)
         {
@@ -66,7 +61,6 @@
             return;
         }
 
-        // Success — navigate to confirmation
         NavigationManager.NavigateTo("/estatemanager");
     }
 
@@ -74,8 +68,9 @@
     {
         if (firstRender)
         {
-            await AuthService.GetStateFromTokenAsync();
-            StateHasChanged(); // trigger UI update once auth state is restored
+            // Restore from JWT in localStorage
+            await AuthService.RestoreFromLocalStorage();
+            StateHasChanged();
         }
     }
 }

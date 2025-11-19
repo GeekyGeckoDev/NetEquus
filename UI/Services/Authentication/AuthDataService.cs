@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
+using Application.Responses;
 using Application.UserApp.IAuthServices;
 using Application.UserApp.UserDtos;
 using UI.Services.Authentication;

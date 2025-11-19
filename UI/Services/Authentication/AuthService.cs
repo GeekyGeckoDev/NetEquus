@@ -1,4 +1,5 @@
-﻿using Application.UserApp.AuthServices;
+﻿using Application.Responses;
+using Application.UserApp.AuthServices;
 using Application.UserApp.IAuthServices;
 using Application.UserApp.UserDtos;
 using Blazored.LocalStorage;
@@ -147,23 +148,5 @@ namespace UI.Services.Authentication
         }
     }
 
-    public class SignInModel
-    {
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-    }
-
-    public class ServiceResponse<T>
-    {
-        public string Message { get; set; }
-        public bool Success { get; set; }
-        public T? Data { get; set; }
-
-        public ServiceResponse(string message, bool success = false, T? data = default)
-        {
-            Message = message;
-            Success = success;
-            Data = data;
-        }
-    }
+ 
 }

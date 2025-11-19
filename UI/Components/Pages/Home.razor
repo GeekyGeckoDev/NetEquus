@@ -1,4 +1,5 @@
 ﻿@using Application.UserApp.AuthServices
+@using Application.UserApp.IAuthServices
 
 <h1>@message</h1>
 
@@ -28,7 +29,7 @@
     {
         if (firstRender)
         {
-            await AuthService.GetStateFromTokenAsync();
+            await AuthService.RestoreFromLocalStorage();
             StateHasChanged(); // trigger UI update once auth state is restored
         }
     }

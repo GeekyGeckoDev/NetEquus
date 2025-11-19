@@ -33,5 +33,15 @@ namespace Application.UserApp.UserMappers
             };
         }
 
+        public static User ToNewUser(UserRegistrationDto userRegistrationDto)
+        {
+            return new User
+            {
+                Username = userRegistrationDto.Username,
+                Email = userRegistrationDto.Email
+
+            };
+        }
+
     }
 }

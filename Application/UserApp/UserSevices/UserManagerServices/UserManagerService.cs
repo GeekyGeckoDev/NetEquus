@@ -33,20 +33,20 @@ namespace Application.UserApp.UserSevices.UserManagerServices
             _passwordValidationService = passwordValidationService;
         }
 
-        public async Task<RuleResult> HashAndCreateUserAsync(UserDto userDto)
+        public async Task<RuleResult> HashAndCreateUserAsync(UserRegistrationDto userRegistrationDto)
         {
 
-            var usernameCheck = await _registrationValidationService.CheckUsernameAsync(userDto);
+            var usernameCheck = await _registrationValidationService.CheckUsernameAsync(userRegistrationDto);
             if (usernameCheck == null || !usernameCheck.IsAllowed)
                 return usernameCheck;
 
-            var passwordCheck = await _passwordValidationService.CheckPasswordAsync(userDto.Password);
+            var passwordCheck = await _passwordValidationService.CheckPasswordAsync(userRegistrationDto.Password);
             if (!passwordCheck.IsAllowed)
                 return passwordCheck;
 
-            var user = UserMapper.ToUser(userDto);
+            var user = UserMapper.ToNewUser(userRegistrationDto);
 
-            user.PasswordHash = _passwordHasherService.HashPassword(userDto.Password);
+            user.PasswordHash = _passwordHasherService.HashPassword(userRegistrationDto.Password);
 
             await _adminUserCrudService.CreateUserAsync(user);
 

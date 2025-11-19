@@ -10,6 +10,6 @@ namespace Application.UserApp.IUserServices
 {
     public interface IUserManagerService
     {
-        Task<RuleResult> HashAndCreateUserAsync(UserDto userDto);
+        Task<RuleResult> HashAndCreateUserAsync(UserRegistrationDto userRegistrationDto);
     }
 }

@@ -10,7 +10,7 @@ namespace Application.UserApp.IUserServices.IUserValidationServices
 {
     public interface IEmailValidationService
     {
-        Task<RuleResult> CheckEmailAsync(UserDto userDto);
+        Task<RuleResult> CheckEmailAsync(UserRegistrationDto userRegistrationDto);
 
     }
 }
